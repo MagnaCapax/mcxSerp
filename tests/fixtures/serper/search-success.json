@@ -1,0 +1,32 @@
+{
+  "searchParameters": {
+    "q": "site:example.com observability",
+    "gl": "us",
+    "hl": "en",
+    "num": 10
+  },
+  "searchInformation": {
+    "totalResults": 12345
+  },
+  "organic": [
+    {
+      "position": 1,
+      "title": "Example Observability Guide",
+      "link": "https://example.com/observability-guide",
+      "snippet": "Learn observability basics with metrics, traces, and logs.",
+      "date": "Mar 10, 2026",
+      "sitelinks": [
+        {
+          "title": "Pricing",
+          "link": "https://example.com/pricing"
+        }
+      ]
+    },
+    {
+      "position": 2,
+      "title": "Observability Tools Roundup",
+      "link": "https://other.example.net/tools",
+      "snippet": "A comparison of observability platforms."
+    }
+  ]
+}

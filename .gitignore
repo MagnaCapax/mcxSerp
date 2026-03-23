@@ -1,0 +1,9 @@
+/vendor/
+/data/
+composer.lock
+.phpunit.result.cache
+.phpunit.cache/
+config/config.yaml
+*.env
+.idea/
+.vscode/

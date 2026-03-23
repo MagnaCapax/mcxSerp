@@ -1,0 +1,87 @@
+{
+  "search_metadata": {
+    "id": "serpapi-google-1"
+  },
+  "search_information": {
+    "total_results": 987654
+  },
+  "answer_box": {
+    "type": "organic_result",
+    "title": "SERP APIs",
+    "link": "https://example.com/serp-apis",
+    "snippet": "SERP APIs provide structured search result data."
+  },
+  "related_questions": [
+    {
+      "question": "What is a SERP API?",
+      "snippet": "An API for search results.",
+      "link": "https://example.com/faq-serp-api",
+      "title": "SERP API FAQ"
+    }
+  ],
+  "knowledge_graph": {
+    "title": "Search engine",
+    "type": "Technology",
+    "kgmid": "/m/012345",
+    "description": "A search engine indexes content.",
+    "source": {
+      "name": "Example",
+      "link": "https://example.com"
+    }
+  },
+  "related_searches": [
+    {
+      "query": "serp scraper api",
+      "link": "https://serpapi.com/search?q=serp+scraper+api"
+    }
+  ],
+  "ads": [
+    {
+      "block_position": "top",
+      "position": 1,
+      "title": "SERP Monitoring",
+      "link": "https://ads.example.com/serp-monitoring",
+      "description": "Track rankings with daily snapshots."
+    }
+  ],
+  "shopping_results": [
+    {
+      "title": "Ranking Monitor",
+      "price": "$19.00",
+      "source": "Example Store",
+      "link": "https://shop.example.com/ranking-monitor",
+      "rating": 4.8
+    }
+  ],
+  "organic_results": [
+    {
+      "position": 1,
+      "title": "SERP API Guide",
+      "link": "https://example.com/serp-api-guide",
+      "snippet": "How to use search APIs effectively.",
+      "displayed_link": "example.com › serp-api-guide",
+      "date": "Mar 12, 2026",
+      "sitelinks": {
+        "inline": [
+          {
+            "title": "Docs",
+            "link": "https://example.com/docs"
+          }
+        ]
+      },
+      "rich_snippet": {
+        "top": {
+          "detected_extensions": {
+            "minutes": 8
+          }
+        }
+      }
+    },
+    {
+      "position": 2,
+      "title": "SerpAPI",
+      "link": "https://serpapi.com/",
+      "snippet": "Real-time search API."
+    }
+  ]
+}

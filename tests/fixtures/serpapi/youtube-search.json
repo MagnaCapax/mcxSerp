@@ -1,0 +1,13 @@
+{
+  "search_information": {
+    "total_results": 88
+  },
+  "organic_results": [
+    {
+      "position": 1,
+      "title": "Observability talk",
+      "link": "https://www.youtube.com/watch?v=abc123",
+      "snippet": "Conference talk about observability."
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "search_information": {
+    "total_results": 4567
+  },
+  "organic_results": [
+    {
+      "position": 1,
+      "title": "Bing result one",
+      "link": "https://bing.example.com/result-one",
+      "snippet": "First Bing result."
+    }
+  ]
+}

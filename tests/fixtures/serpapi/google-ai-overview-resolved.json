@@ -1,0 +1,14 @@
+{
+  "text_blocks": [
+    {
+      "snippet": "Resolved AI overview content appears here.",
+      "references": [
+        {
+          "title": "Resolved Source",
+          "link": "https://resolved.example.com/source",
+          "source": "Resolved Example"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "search_information": {
+    "total_results": 321
+  },
+  "organic_results": [
+    {
+      "position": 1,
+      "title": "DuckDuckGo result",
+      "link": "https://ddg.example.com/result",
+      "snippet": "Privacy-focused search result."
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "searchParameters": {
+    "q": "llm observability",
+    "gl": "us",
+    "hl": "en",
+    "num": 10
+  },
+  "searchInformation": {
+    "totalResults": 432100
+  },
+  "answerBox": {
+    "title": "LLM observability",
+    "link": "https://example.com/llm-observability",
+    "snippet": "LLM observability measures prompts, responses, latency, and cost."
+  },
+  "peopleAlsoAsk": [
+    {
+      "question": "What is LLM observability?",
+      "snippet": "It tracks model behavior and reliability.",
+      "link": "https://example.com/what-is-llm-observability"
+    }
+  ],
+  "knowledgeGraph": {
+    "title": "Observability",
+    "type": "Field",
+    "website": "https://example.com",
+    "description": "Observability helps operators understand system behavior.",
+    "attributes": {
+      "Category": "Software"
+    }
+  },
+  "relatedSearches": [
+    {
+      "query": "ai observability tools"
+    }
+  ],
+  "organic": [
+    {
+      "position": 1,
+      "title": "Example LLM Observability",
+      "link": "https://example.com/llm-observability",
+      "snippet": "Instrumentation for prompts and traces."
+    }
+  ]
+}

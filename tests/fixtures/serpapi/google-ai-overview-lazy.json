@@ -1,0 +1,16 @@
+{
+  "search_information": {
+    "total_results": 200
+  },
+  "ai_overview": {
+    "page_token": "lazy-token-123"
+  },
+  "organic_results": [
+    {
+      "position": 1,
+      "title": "Lazy overview article",
+      "link": "https://example.com/lazy-overview",
+      "snippet": "Lazy overview result."
+    }
+  ]
+}
