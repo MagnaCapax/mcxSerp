@@ -7,6 +7,7 @@ namespace MagnaCapax\Serp\Tests\Provider;
 use MagnaCapax\Serp\Enum\Device;
 use MagnaCapax\Serp\Enum\Engine;
 use MagnaCapax\Serp\Exception\AuthenticationException;
+use MagnaCapax\Serp\Exception\ProviderException;
 use MagnaCapax\Serp\Exception\RateLimitException;
 use MagnaCapax\Serp\Exception\UnsupportedEngineException;
 use MagnaCapax\Serp\Http\Response;
@@ -102,6 +103,40 @@ final class SerperProviderTest extends TestCase
         } catch (RateLimitException $exception) {
             self::assertSame(120, $exception->retryAfterSeconds);
         }
+    }
+
+    /**
+     * Regression: an exhausted quota answers 400 {"message":"Not enough credits"}. That used to
+     * fall through to `default`, decode to zero organic results, and reach the consumer as
+     * "the domain does not rank" — silently, for 16 days. It must raise instead.
+     */
+    public function testQuotaExhaustedResponseRaisesInsteadOfDecodingToEmptyResults(): void
+    {
+        $provider = new SerperProvider(
+            'test-key',
+            new MockHttpClient([
+                new Response(400, [], Stream::fromString('{"message":"Not enough credits","statusCode":400}')),
+            ])
+        );
+
+        try {
+            $provider->search('test');
+            self::fail('Expected provider exception for HTTP 400.');
+        } catch (ProviderException $exception) {
+            self::assertStringContainsString('400', $exception->getMessage());
+            self::assertStringContainsString('Not enough credits', $exception->getMessage());
+        }
+    }
+
+    public function testUnexpectedClientErrorRaisesEvenWithoutAMessageBody(): void
+    {
+        $provider = new SerperProvider(
+            'test-key',
+            new MockHttpClient([new Response(404, [], Stream::fromString('{}'))])
+        );
+        self::expectException(ProviderException::class);
+
+        $provider->search('test');
     }
 
     private function fixture(string $path): string

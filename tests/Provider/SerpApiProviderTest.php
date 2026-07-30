@@ -6,6 +6,7 @@ namespace MagnaCapax\Serp\Tests\Provider;
 
 use MagnaCapax\Serp\Enum\Engine;
 use MagnaCapax\Serp\Exception\AuthenticationException;
+use MagnaCapax\Serp\Exception\ProviderException;
 use MagnaCapax\Serp\Exception\RateLimitException;
 use MagnaCapax\Serp\Http\Response;
 use MagnaCapax\Serp\Http\Stream;
@@ -121,6 +122,28 @@ final class SerpApiProviderTest extends TestCase
             self::fail('Expected rate limit exception.');
         } catch (RateLimitException $exception) {
             self::assertSame(30, $exception->retryAfterSeconds);
+        }
+    }
+
+    /**
+     * Regression: mirrors the SerperProvider quota-exhaustion incident. A non-2xx must raise,
+     * never decode to an empty result set that reads as "the domain does not rank".
+     */
+    public function testUnexpectedClientErrorRaisesInsteadOfDecodingToEmptyResults(): void
+    {
+        $provider = new SerpApiProvider(
+            'test-key',
+            new MockHttpClient([
+                new Response(400, [], Stream::fromString('{"error":"Invalid API key or plan limit reached"}')),
+            ])
+        );
+
+        try {
+            $provider->search('test');
+            self::fail('Expected provider exception for HTTP 400.');
+        } catch (ProviderException $exception) {
+            self::assertStringContainsString('400', $exception->getMessage());
+            self::assertStringContainsString('plan limit reached', $exception->getMessage());
         }
     }
 

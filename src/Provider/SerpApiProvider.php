@@ -151,8 +151,29 @@ final class SerpApiProvider implements ProviderInterface
             $status === 401, $status === 403 => throw new AuthenticationException('Authentication failed for SerpAPI.'),
             $status === 429 => throw new RateLimitException('SerpAPI rate limit exceeded.', $this->parseRetryAfter($response)),
             $status >= 500 => throw new ProviderException('SerpAPI provider error.'),
+            // Any other non-2xx is an error, NOT an empty result set — see SerperProvider for
+            // the production incident this prevents (quota-exhausted 400 decoding to zero
+            // organic results, indistinguishable from "the domain does not rank").
+            $status < 200, $status >= 300 => throw new ProviderException($this->errorMessage('SerpAPI', $response)),
             default => $response,
         };
+    }
+
+    /**
+     * Build an error message that surfaces the provider's own explanation when it sends one,
+     * so an operator sees the cause rather than a bare status code.
+     */
+    private function errorMessage(string $provider, ResponseInterface $response): string
+    {
+        $status = $response->getStatusCode();
+        $decoded = json_decode((string) $response->getBody(), true);
+        $detail = is_array($decoded)
+            ? ($decoded['error'] ?? $decoded['message'] ?? null)
+            : null;
+
+        return is_string($detail) && $detail !== ''
+            ? sprintf('%s returned HTTP %d: %s', $provider, $status, $detail)
+            : sprintf('%s returned HTTP %d.', $provider, $status);
     }
 
     private function parseRetryAfter(ResponseInterface $response): ?int

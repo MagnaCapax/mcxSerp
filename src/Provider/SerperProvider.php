@@ -141,8 +141,30 @@ final class SerperProvider implements ProviderInterface
             $status === 401, $status === 403 => throw new AuthenticationException('Authentication failed for Serper.'),
             $status === 429 => throw new RateLimitException('Serper rate limit exceeded.', $this->parseRetryAfter($response)),
             $status >= 500 => throw new ProviderException('Serper provider error.'),
+            // Any other non-2xx is an error, NOT an empty result set. Serper answers an
+            // exhausted quota with 400 {"message":"Not enough credits"}; falling through to
+            // `default` made that decode to zero organic results, which consumers cannot
+            // distinguish from "the domain does not rank". Silent for 16 days in production.
+            $status < 200, $status >= 300 => throw new ProviderException($this->errorMessage('Serper', $response)),
             default => $response,
         };
+    }
+
+    /**
+     * Build an error message that surfaces the provider's own explanation when it sends one,
+     * so an operator sees "Not enough credits" rather than a bare status code.
+     */
+    private function errorMessage(string $provider, ResponseInterface $response): string
+    {
+        $status = $response->getStatusCode();
+        $decoded = json_decode((string) $response->getBody(), true);
+        $detail = is_array($decoded)
+            ? ($decoded['message'] ?? $decoded['error'] ?? null)
+            : null;
+
+        return is_string($detail) && $detail !== ''
+            ? sprintf('%s returned HTTP %d: %s', $provider, $status, $detail)
+            : sprintf('%s returned HTTP %d.', $provider, $status);
     }
 
     private function parseRetryAfter(ResponseInterface $response): ?int
