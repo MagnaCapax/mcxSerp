@@ -10,6 +10,12 @@ A PHP library that provides a unified interface to query multiple SERP (Search E
 
 Apache-2.0. No MIT. No exceptions.
 
+## Principles
+
+Start with [`development/`](development/README.md): the [engineering principles](development/engineering-principles.md) explain these rules with their reasons and the mistakes that taught them, and [ADR-0001](docs/adr/0001-architecture-layout-and-languages.md) records this library's layout and languages.
+
+KISS, DRY, YAGNI ("What NOT to Build" below is this rule applied). Delete first: question the requirement, delete the part, simplify, then speed up, then automate (a needed but broken part is debugged, not deleted). Pit of success: safe defaults, risky paths explicit and loud; a failed call raises a typed exception and is never returned as an empty result. Never break old users: `ProviderInterface`, the public model properties, the `jsonSerialize()` keys and the exception classes are the public API. Tests that can fail: run `php tests/run.php`, read its summary and exit code, and give a provider change a fixture and a test for its error paths. Files around 150 lines (a target, not a hard limit). camelCase names read from the broadest context to the most specific; class and file names follow PSR-4. Accepted ADRs in `docs/adr/` are binding: follow them or supersede them with a new ADR, never work around them; a significant behaviour, interface, security or workflow change ships with an ADR (template `docs/adr/0000-template.md`, one subject per ADR). Before committing, review the change with the [review unit](https://github.com/MagnaCapax/mcxPikkumies/tree/main/pikkumies/tools/development/code-review) against these rules and the ADRs. This repository is public: no API keys, credentials or internal data in code, tests, fixtures or commit messages.
+
 ## Tech Stack
 
 - PHP 8.1+ (uses backed enums, readonly properties, constructor promotion)
